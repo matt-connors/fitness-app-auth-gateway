@@ -1,0 +1,38 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "fitness-app-auth-gateway"
+main = "src/index.ts"
+compatibility_date = "2025-01-09"
+compatibility_flags = [ "nodejs_compat" ]
+
+# Workers Logs
+[observability]
+enabled = true
+
+# Automatically place your workloads in an optimal location to minimize latency.
+[placement]
+mode = "smart"
+
+# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
+[vars]
+FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
+PROJECT_ID = "fitness-app"
+
+# Specify cache key to store and get public jwk.
+PUBLIC_JWK_CACHE_KEY = "public-jwk-cache-key"
+
+[[kv_namespaces]]
+binding = "PUBLIC_JWK_CACHE_KV"
+id = "ac2626fd01534a5ebf17a6136c313bb0"
+preview_id = "904b512064b2469caafec109bf64a0a4"
+
+# Bind a Hyperdrive configuration. Use to accelerate access to your existing databases from Cloudflare Workers.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#hyperdrive
+# [[hyperdrive]]
+# binding = "MY_HYPERDRIVE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Bind another Worker service. Use this binding to call another Worker without network overhead.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
+[[services]]
+binding = "FITNESS_APP_GRAPHQL"
+service = "fitness-app-graphql"
